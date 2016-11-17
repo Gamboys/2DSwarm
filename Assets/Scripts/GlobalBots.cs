@@ -3,7 +3,8 @@ using System.Collections;
 
 public class GlobalBots : MonoBehaviour {
 
-	public GameObject leaderBot;
+	// public GameObject leaderBot;
+
 	public GameObject botPrefab;
 	BotController leaderBC;
 
@@ -17,7 +18,7 @@ public class GlobalBots : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		BuildBotArray ();
-		SetBotLeader ();
+		// SetBotLeader ();
 	}
 
 
@@ -38,7 +39,9 @@ public class GlobalBots : MonoBehaviour {
 	}
 
 
+	// Save this until we implement the trees
 	// Sets bot closest to player to be leader
+	/*
 	private void
 	SetBotLeader () {
 		leaderBot = allBots [0];
@@ -60,6 +63,7 @@ public class GlobalBots : MonoBehaviour {
 		}
 		leaderBot.gameObject.tag = "BotLead";
 	}
+	*/
 
 
 	// Builds the bot tree

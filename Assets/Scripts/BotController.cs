@@ -25,6 +25,10 @@ public class BotController : MonoBehaviour {
 	public float speed;
 	static float spaceAllowance = 1.4f;
 
+
+	/*------------------------------------------------------------------------*/
+
+
 	void
 	Start () {
 		// Initialise GameObject shit
@@ -34,16 +38,19 @@ public class BotController : MonoBehaviour {
 		globalBots = botMaster.gameObject.GetComponent<GlobalBots> ();
 
 		SetTarget ();
-		speed = CalcSpeed ();
+		// speed = CalcSpeed ();
 	}
 
 
 	void
 	FixedUpdate () {
 		CalcToTarget ("player");
-		// CalcTarget ();
 		CalcToTarget ("target");
-		MoveToTarget ();
+		if (toTarget.magnitude > 2) {
+			MoveToTarget ();
+		} else {
+			MoveBack ();
+		}
 	}
 
 	/*------------------------------------------------------------------------*/
@@ -54,17 +61,20 @@ public class BotController : MonoBehaviour {
 	}
 
 
+	private void
+	MoveBack () {
+		if (toTarget.magnitude < 1.75) {
+			rb2d.velocity = -toTarget * 4 * speed;
+		} else {
+			rb2d.velocity = Vector2.zero;
+		}
+	}
+
 	// TODO: Add functionality to follow nearest bot
 	private void
 	SetTarget () {
-
-		if (gameObject.CompareTag ("BotLead")) {
-			target = GameObject.Find ("Player");
-			targetMag = CalcTargetMag ();
-		} else {
-			target = globalBots.leaderBot;
-			targetMag = CalcTargetMag ();
-		}
+		target = GameObject.Find ("Player");
+		targetMag = CalcTargetMag ();
 	}
 
 
@@ -120,5 +130,16 @@ public class BotController : MonoBehaviour {
 	CalcSpeed () {
 		return Random.Range (speedLower, speedUpper);
 	}
+
+
+	/* TODO: Quaternion rotation. Iterate from 0 -> 2(pi) and multiply by magic number
+	then set quaternion rotation to said product (don't add force, set it). But how to
+	set average direction?
+	*/
+	private void
+	SinRotate () {
+
+	}
+
 }
 	
